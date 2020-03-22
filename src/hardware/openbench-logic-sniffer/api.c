@@ -135,10 +135,10 @@ static GSList *scan(struct sr_dev_driver *di, GSList *options)
 
 	g_usleep(RESPONSE_DELAY_US);
 
-	if (serial_has_receive_data(serial) == 0) {
-		sr_dbg("Didn't get any reply.");
-		return NULL;
-	}
+	//if (serial_has_receive_data(serial) == 0) {
+	//	sr_dbg("Didn't get any reply.");
+	//	return NULL;
+	//}
 
 	ret = serial_read_blocking(serial, buf, 4, serial_timeout(serial, 4));
 	if (ret != 4) {
