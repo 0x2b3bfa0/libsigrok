@@ -83,7 +83,7 @@ static const uint64_t samplerates[] = {
 	SR_HZ(1),
 };
 
-#define RESPONSE_DELAY_US (5000 * 1000)
+#define RESPONSE_DELAY_US (300 * 1000)
 
 static GSList *scan(struct sr_dev_driver *di, GSList *options)
 {
@@ -135,11 +135,11 @@ static GSList *scan(struct sr_dev_driver *di, GSList *options)
 
 	g_usleep(RESPONSE_DELAY_US);
 
-	//if (serial_has_receive_data(serial) == 0) {
-	//	sr_dbg("Didn't get any reply.");
-	//	return NULL;
-	//}
-	sr_dbg("0x2b3bfa0 is pwning you!");
+	if (serial_has_receive_data(serial) == 0) {
+		sr_dbg("Didn't get any reply.");
+		return NULL;
+	}
+
 	ret = serial_read_blocking(serial, buf, 4, serial_timeout(serial, 4));
 	if (ret != 4) {
 		sr_err("Invalid reply (expected 4 bytes, got %d).", ret);
